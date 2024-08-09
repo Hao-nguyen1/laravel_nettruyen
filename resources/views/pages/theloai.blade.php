@@ -55,6 +55,26 @@
                 </div>
               </div>
             @else
+
+
+
+            <style type="text/css">
+              .image-container {
+                width: 100%; 
+                padding-top: 90%; 
+                position: relative;
+                overflow: hidden; 
+            }
+
+            .image-container img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover; 
+            }
+            </style>
           @foreach($truyen as $key => $value)
           <div class="col-md-3">
             <div class="card mb-3 box-shadow">

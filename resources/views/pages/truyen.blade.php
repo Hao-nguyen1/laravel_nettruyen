@@ -40,7 +40,24 @@
         </ol>
     </nav>
 </div>
+<style type="text/css">
+  .image-container {
+    width: 100%; /* Set the width of the container */
+    padding-top: 90%; /* This creates a 16:9 aspect ratio (16 / 9 * 100%) */
+    position: relative;
+    overflow: hidden; /* Hide any overflow to maintain the aspect ratio */
+}
 
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the container */
+}
+
+</style>
       <div class="row">
 
         <div class="col-md-9">
@@ -119,11 +136,11 @@
                 }
               </style>
               <style type="text/css">
-                .infortruyen{
+                .infotruyen{
                   list-style: none;
                 }
               </style>
-              <ul class="infortruyen">
+              <ul class="infotruyen">
                 <li>Tên truyện: {{$truyen->tentruyen}}</li>
                 <li>Tác giả: {{$truyen->tacgia}}</li>
                 <li>Danh mục truyện: <a href="{{url('danh-muc/'.$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
@@ -135,6 +152,8 @@
                 @if($chapter_dau)
                 <li><a href="{{url('xem-chapter/'.$chapter_dau->slug_chapter)}}" class="btn btn-primary">Đọc từ đầu</a></li>
                 
+                <li><a href="{{url('xem-chapter/'.$chapter_cuoi->slug_chapter)}}" class="btn btn-success mb-2 mt-2">Đọc chương mới nhất</a></li>
+
                 <button class="btn btn-danger btn-thich_truyen"><i class="fa fa-heart" aria-hidden="true"></i> Theo dõi truyện </button>
 
                 @else
@@ -146,6 +165,18 @@
 
                 @endphp
                 
+<!--                 <input type="hidden" value="{{$truyen->tentruyen}}" class="wishlist_title">
+                <input type="hidden" value="{{\URL::current()}}" class="wishlist_url">
+                <input type="hidden" value="{{$truyen->id}}" class="wishlist_id">
+
+                <li>Tên truyện: {{$truyen->tentruyen}}</li>
+                <li>Tác giả: {{$truyen->tacgia}}</li>
+                <li>Danh mục truyện: <a href="{{url('danh-muc/'.$truyen->danhmuctruyen->slug_danhmuc)}}">{{$truyen->danhmuctruyen->tendanhmuc}}</a></li>
+                <li>Thể loại: <a href="{{url('the-loai/'.$truyen->theloai->slug_theloai)}}">{{$truyen->theloai->tentheloai}}</a></li>
+                <li>Số chapter: 200</li>
+                <li>Số lượt xem: 23408932</li>
+                <li><a href="#">Xem mục lục</a></li> -->
+
 
                 <div class="tagcloud05">
                   <ul>
@@ -180,30 +211,88 @@
           @endif
         </ul>
 <div class="fb-comments" data-href="http://localhost/laravel_nettruyen/xem-truyen/ta-la-tien" data-width="" data-numposts="10"></div>
+
+
+<style type="text/css">
+.image-container {
+    width: 100%;
+    padding-top: 90%; /* Tỷ lệ 16:9 */
+    position: relative;
+    overflow: hidden;
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-text {
+    flex-grow: 1;
+}
+
+.btn-group {
+    display: flex;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.mt-auto {
+    margin-top: auto;
+}
+
+
+</style>
+
+
         <h4>Sách cùng danh mục</h4>
-        <div class="row">
-        @foreach($cungdanhmuc as $key => $value)
-        <div class="col-md-3">
-          <div class="card mb-3 box-shadow">
-
-            <img class="card-img-top" src="{{asset('public/uploads/truyen/'.$value->hinhanh)}}">
-            <div class="card-body">
-              <h4>{{$value->tentruyen}}</h4>
-              <p class="card-text">{{$value->tomtat}}</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="{{url('xem-truyen/'.$value->slug_truyen)}}" class="btn btn-sm btn-outline-secondary">Đọc ngay</a>
-                  <a type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i>75434</a>
-                </div>
-                <small class="text-body-secondary">9 mins</small>
-              </div>
-            </div>
-
+<div class="row">
+  @foreach($cungdanhmuc as $key => $value)
+  <div class="col-md-4 d-flex"> <!-- Điều chỉnh cột lớn hơn bằng cách sử dụng col-md-4 -->
+    <div class="card mb-4 box-shadow flex-grow-1"> <!-- Điều chỉnh lề dưới để lớn hơn -->
+      <div class="image-container">
+        <img class="card-img-top" src="{{asset('public/uploads/truyen/'.$value->hinhanh)}}" alt="Image">
+      </div>
+      <div class="card-body d-flex flex-column">
+        <h4>{{$value->tentruyen}}</h4>
+        <p class="card-text flex-grow-1">{{$value->tomtat}}</p>
+        <div class="d-flex justify-content-between align-items-center mt-auto">
+          <div class="btn-group">
+            <a href="{{url('xem-truyen/'.$value->slug_truyen)}}" class="btn btn-sm btn-outline-secondary">Đọc ngay</a>
+            <a type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-eye"></i>75434</a>
           </div>
+          <small class="text-body-secondary">9 mins</small>
         </div>
-        @endforeach
+      </div>
+    </div>
+  </div>
+  @endforeach
+</div>
 
-        </div>
               
 
         </div>
